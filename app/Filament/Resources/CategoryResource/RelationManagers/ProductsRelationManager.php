@@ -47,7 +47,7 @@ class ProductsRelationManager extends RelationManager
                 ToggleColumn::make('is_active')->toggleable(isToggledHiddenByDefault: true),
                 ToggleColumn::make('is_feature')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')->toggleable(isToggledHiddenByDefault: true),
-            ])->collapsed()
+            ])
             ->filters([
                 //
             ])
