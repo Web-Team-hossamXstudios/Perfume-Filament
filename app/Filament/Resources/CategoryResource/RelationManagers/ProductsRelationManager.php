@@ -36,18 +36,18 @@ class ProductsRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        
+
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                
+
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('stock'),
                 TextColumn::make('price'),
                 ToggleColumn::make('is_active')->toggleable(isToggledHiddenByDefault: true),
                 ToggleColumn::make('is_feature')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')->toggleable(isToggledHiddenByDefault: true),
-            ])->collapsed()
+            ])
             ->filters([
                 //
             ])

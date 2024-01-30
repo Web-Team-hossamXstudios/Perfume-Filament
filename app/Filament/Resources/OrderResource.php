@@ -40,7 +40,9 @@ class OrderResource extends Resource
                 ->label('Promocode')
                 ->options(Promocode::all()->pluck('value', 'id'))
                 ->searchable(),
-                TextInput::make('value')->required()->numeric(),
+                TextInput::make('total_price')
+                ->label('Total Price')
+                ->required()->numeric(),
                 TextInput::make('quantity')->required()->numeric(),
                 TextInput::make('status')->required(),
             ]);
