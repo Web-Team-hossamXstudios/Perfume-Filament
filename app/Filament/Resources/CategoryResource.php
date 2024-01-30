@@ -36,6 +36,7 @@ class CategoryResource extends Resource
                 TextInput::make('name')->required(),
                 TagsInput::make('tags')->required(),
                 Textarea::make('description')->required(),
+
             ]);
     }
 
