@@ -83,7 +83,6 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function clientProfile() {
-        $user=User::all();
         return response()->json(auth()->user());
     }
     public function updateProfile(UpdateClientProfileRequest $request, Client $client) {

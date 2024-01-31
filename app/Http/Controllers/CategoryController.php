@@ -10,8 +10,10 @@ class CategoryController extends Controller
     public function index()
     {
         $category= Category::all();
-//        $category->addMediaFromRequest('image')->toMediaCollection('images');
+//        $category->addMediaFromRequest('category')->toMediaCollection('images');
         return response()->json($category);
+//        $media =$category->getMedia();
+//        return response()->json(['media'=> $media]);
 
     }
 }
