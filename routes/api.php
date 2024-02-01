@@ -56,6 +56,10 @@ Route::post('/reviews',[ReviewController::class,'store']);
 Route::get('/favourites',[FavouriteController::class,'index']);
 Route::post('/favourites',[FavouriteController::class,'store']);
 
+//Cart
+Route::get('/cart',[CartController::class,'getCart']);
+
+
 //CartItem
 Route::get('/cartItem',[CartItemController::class,'createCartItem']);
 Route::post('/EditCartItem/{id}',[CartItemController::class,'EditCartItem']);

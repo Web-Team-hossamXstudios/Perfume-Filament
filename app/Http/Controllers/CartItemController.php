@@ -16,10 +16,14 @@ class CartItemController extends Controller
         'price'      => $request->price,
     ]);
 }
+
+
     public function EditCartItem(UpdateCartItem $request, CartItem $cartItem, $id){
         $cartItem->where('id', $id )->update($request->validated());
         return response([ 'message' => 'Updated successfully',], 200);
     }
+
+
     public function DeleteCartItem(CartItem $cartItem, $id){
         $cartItem->where('id', $id )->Destroy();
 

@@ -13,6 +13,7 @@ class CartController extends Controller
     {
         // Retrieve cart
         $carts = Cart::where('client_id', auth('api')->user()->id);
+        return response([$carts], 200);
     }
 
 }
