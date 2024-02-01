@@ -55,19 +55,19 @@ Route::get('/reviews/{id}',[ReviewController::class,'index']);
 Route::post('/reviews',[ReviewController::class,'store']);
 
 //favourite
-Route::get('/favourites',[FavouriteController::class,'index']);
-Route::post('/favourites',[FavouriteController::class,'store']);
+Route::get('/favourites',[FavouriteController::class,'getFavourite']);
+Route::post('/favourites/add',[FavouriteController::class,'createFavourite']);
 
 //Cart
 Route::get('/cart',[CartController::class,'getCart']);
 
 
 //CartItem
-Route::post('/cartItem',[CartItemController::class,'createCartItem']);
-Route::post('/EditCartItem',[CartItemController::class,'EditCartItem']);
-Route::post('/DeleteCartItem',[CartItemController::class,'DeleteCartItem']);
+Route::post('/cartItem/add',[CartItemController::class,'createCartItem']);
+Route::post('/cartItem/edit',[CartItemController::class,'editCartItem']);
+Route::post('/cartItem/delete',[CartItemController::class,'deleteCartItem']);
 
 //order
-Route::post('/order',[OrderController::class,'CreateOrder']);
-Route::post('/delete_order',[OrderController::class,'delete']);
+Route::post('/order',[OrderController::class,'createOrder']);
+Route::post('/order/delete',[OrderController::class,'delete']);
 

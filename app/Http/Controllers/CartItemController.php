@@ -17,6 +17,7 @@ class CartItemController extends Controller
         $cartItem->product_id =  $product->id;
         $cartItem->quantity =  $request->quantity;
         $cartItem->price     =  $product->price;
+        $cartItem->total     =  $product->price * $request->quantity;
         if ($cartItem->save()) {
             return response ($cartItem,200);
         }else {
@@ -25,11 +26,14 @@ class CartItemController extends Controller
     }
 
 
-    public function EditCartItem(Request $request){
+    public function editCartItem(Request $request){
+
         $cartItem = CartItem::find( $request->id );
+        $product = Product::find( $cartItem->product_id );
         $cartItem->quantity =  $request->quantity;
+        $cartItem->total     =  $product->price * $request->quantity;
         if ($cartItem->save()) {
-            return response ($cartItem,200);
+            return response (['Update Succesfully',$cartItem],200);
         }else {
             return response ('something went wrong',401);
 
@@ -37,8 +41,13 @@ class CartItemController extends Controller
     }
 
 
-    public function DeleteCartItem(Request $request){
-        $cartItem = CartItem::find($request->id)->Destroy();
+    public function deleteCartItem(Request $request){
+        
+        if (CartItem::destroy($request->id)) {
+            return response ('Deleted Succesfully',200);
+        }else {
+            return response ('Not Found ',401);
+        }
 
     }
 }
