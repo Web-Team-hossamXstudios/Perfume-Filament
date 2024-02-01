@@ -39,9 +39,9 @@ Route::group([
 Route::get('category',[CategoryController::class,'index']);
 
 //Address
-Route::post('address',[AddressController::class,'store']);
-Route::post('address_update',[AddressController::class,'update']);
-Route::get('address/{id}',[AddressController::class,'index']);
+Route::get('address',[AddressController::class,'getAddress']);
+Route::post('address',[AddressController::class,'storeAddress']);
+Route::post('address_update',[AddressController::class,'updateAddress']);
 
 //Product
 Route::get('/products',[ProductController::class,'index']);

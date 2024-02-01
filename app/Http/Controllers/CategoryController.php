@@ -9,10 +9,11 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $category= Category::all();
-//        $category->addMediaFromRequest('category')->toMediaCollection('images');
-        return response()->json($category);
-//        $media =$category->getMedia();
+        $categories= Category::all();
+        foreach ($categories as $category) {
+            $category->getMedia('categories');
+        }
+        return response()->json($categories);
 //        return response()->json(['media'=> $media]);
 
     }

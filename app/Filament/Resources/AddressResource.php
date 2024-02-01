@@ -43,7 +43,7 @@ class AddressResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('client_id'),
+                TextColumn::make('client.name'),
                 TextColumn::make('city'),
                 TextColumn::make('type'),
                 TextColumn::make('area'),
@@ -58,6 +58,7 @@ class AddressResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

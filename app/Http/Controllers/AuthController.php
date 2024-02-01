@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Requests\UpdateClientProfileRequest;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,37 +10,28 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
+
+    
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    
     public function login(Request $request){
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response($validator->errors(), 422);
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response(['error' => 'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
     }
-    /**
-     * Register a client.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
@@ -48,64 +40,50 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response($validator->errors(), 400);
         }
         $client = Client::create(array_merge(
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
-        return response()->json([
+                $cart = Cart::create([
+                    "client_id" => $client->id,
+                ]);
+        return response([
             'message' => 'client successfully registered',
-            'client' => $client
+            'client' => $client,
+            'cart' => $cart
         ], 201);
     }
 
-    /**
-     * Log the client out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    
     public function logout() {
         auth()->logout();
-        return response()->json(['message' => 'client successfully signed out']);
+        return response(['message' => 'client successfully signed out']);
     }
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    
     public function refresh() {
         return $this->createNewToken(auth()->refresh());
     }
-    /**
-     * Get the authenticated client.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function clientProfile() {
-        return response()->json(auth()->user());
-    }
-    public function updateProfile(UpdateClientProfileRequest $request, Client $client) {
-        $client_id=$request->user()->id;
-        $client->where('id', $client_id)->update($request->validated());
 
-        return response()->json([
-            'message' => 'Updated successfully',
-        ], 200);
+    
+    public function clientProfile() {
+        return response(auth()->user());
     }
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    public function updateProfile(UpdateClientProfileRequest $request, Client $client) {
+        $client_id  =   $request->user()->id;
+        $client->where('id', $client_id)->update($request->validated());
+        return response(['message' => 'Updated successfully'], 200);
+    }
+
+    
     protected function createNewToken($token){
-        return response()->json([
+        return response([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'client' => auth()->user()
+            'expires_in' => auth()->factory()->getTTL() * 36000,
         ]);
     }
 }
