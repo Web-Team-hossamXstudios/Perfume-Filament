@@ -11,8 +11,8 @@ class AddressController extends Controller
 {
 
     public function getAddress(){
-        $address= Address::find(auth()->user()->id);
-        return response([$address],200);
+        $address= Address::all()->where('client_id',auth()->user()->id);
+        return response(['address' => $address],200);
     }
     
     public function storeAddress(Request $request){
