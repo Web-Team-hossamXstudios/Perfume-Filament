@@ -12,7 +12,7 @@ class AddressController extends Controller
 
     public function getAddress(){
         $address= Address::all()->where('client_id',auth()->user()->id);
-        
+
         return response(['address' => $address],200);
     }
 
@@ -54,7 +54,7 @@ public function updateAddress(UpdateAddressRequest $request)
 
 public function DeleteAddress(Request $request)
 {
-     Address::find($request->id)->Destroy();
+    Address::find($request->id)->Destroy();
     return response([ 'message' => 'Deleted successfully',], 200);
 
 }
