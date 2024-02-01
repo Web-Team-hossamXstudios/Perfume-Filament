@@ -14,7 +14,7 @@ class AddressController extends Controller
         $address= Address::all()->where('client_id',auth()->user()->id);
         return response(['address' => $address],200);
     }
-    
+
     public function storeAddress(Request $request){
         $request->validate([
             "city"=>"required",
@@ -40,10 +40,12 @@ class AddressController extends Controller
         return response([$address], 201);
 }
 
-public function updateAddress(UpdateAddressRequest $request, Address $address ,$id)
+public function updateAddress(Request $request)
 {
-    $address->where('id', $id )->update($request->validated());
+    $address=Address::find($request->id );
+    $address->update();
+
     return response([ 'message' => 'Updated successfully',], 200);
-    
+
 }
 }
