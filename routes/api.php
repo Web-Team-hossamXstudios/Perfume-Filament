@@ -47,7 +47,7 @@ Route::post('address_update',[AddressController::class,'updateAddress']);
 
 //Product
 Route::get('/products',[ProductController::class,'allProduct']);
-Route::get('/product/{id}',[ProductController::class,'show']);
+Route::get('/product/{id}',[ProductController::class,'getProduct']);
 
 //Review
 Route::get('/reviews/{id}',[ReviewController::class,'index']);
