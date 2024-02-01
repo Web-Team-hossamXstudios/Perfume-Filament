@@ -18,6 +18,7 @@ class OrderController extends Controller
         $order->quantity = $request->quantity;
         $order-> status = "pending";
 
+
         if ( $order->save()){
             foreach ($request->cartItem as $item)
                 $order_item = new OrderItem();
@@ -27,7 +28,14 @@ class OrderController extends Controller
                 $order_item->price = $item->price;
 
         }
-        $order_item->save();
+        if($order_item->save())
+        {
+            $request->cartItem->delete();
+        }
+        else
+        {
+
+        }
         return response()->json([
             "order"=> $order,
             "orderItems"=> $order_item

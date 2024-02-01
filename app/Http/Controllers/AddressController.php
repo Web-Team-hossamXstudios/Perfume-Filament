@@ -15,7 +15,7 @@ class AddressController extends Controller
         return response(['address' => $address],200);
     }
 
-    public function storeAddress(Request $request){
+    public function CreateAddress(Request $request){
         $request->validate([
             "city"=>"required",
             "type"=>"required",
@@ -26,26 +26,35 @@ class AddressController extends Controller
             "street"=>"required",
             "additional_directions"=>"required",
         ]);
-        $address=Address::create([
-            "client_id"=>$request->user()->id,
-            "city"=>$request->city,
-            "type"=>$request->type,
-            "area"=>$request->area,
-            "buliding"=>$request->buliding,
-            "appartment"=>$request->appartment,
-            "floor"=>$request->floor,
-            "street"=>$request->street,
-            "additional_directions"=>$request->additional_directions,
-        ]);
-        return response([$address], 201);
+        $address= new Address();
+        $address->client_id = $request->user()->id;
+        $address->city = $request->city;
+        $address->type = $request->type;
+        $address->area = $request->area;
+        $address->buliding = $request->buliding;
+        $address->appartment = $request->appartment;
+        $address->floor = $request->floor;
+        $address->street = $request->street;
+        $address->additional_directions = $request->additional_directions;
+
+        if ($address->save()) {
+            return response ($address,201);
+        }else {
+            return response ('something went wrong',401);
+        }
 }
 
-public function updateAddress(Request $request)
+public function updateAddress(UpdateAddressRequest $request)
 {
-    $address=Address::find($request->id );
-    $address->update();
-
+    $address =Address::find($request->id )->update($request->validated());
     return response([ 'message' => 'Updated successfully',], 200);
+
+}
+
+public function DeleteAddress(Request $request)
+{
+     Address::find($request->id)->Destroy();
+    return response([ 'message' => 'Deleted successfully',], 200);
 
 }
 }
