@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function CreateOrder(Request $request ){
+    public function createOrder(Request $request ){
 
         $order = new Order();
         $order->client_id = $request->user()->id;

@@ -14,13 +14,15 @@ class FavouriteController extends Controller
     }
 
     //store favourites by id
-    public function create(Request $request){
-        Favourite::createFavourite([
-            "client_id"=>auth('api')->user()->id,
-            "product_id"=> $request->product_id,
-        ]);
-        return response()->json
-        (['message' => 'Review created successfully']);
+    public function createFavourite(Request $request){
+        $favourite = new Favourite();
+        $favourite->client_id = $request->user()->id;
+        $favourite->product_id = $request->product_id;
+        if ($favourite->save()) {
+            return response ($favourite,200);
+        }else {
+            return response ('something went wrong',401);
+        }
+
     }
-        
 }
