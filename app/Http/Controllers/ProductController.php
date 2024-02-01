@@ -19,11 +19,12 @@ class ProductController extends Controller
     }
 
 
-    public function show($id)
+    public function getProduct($id)
     {
         // Retrieve the product
-        $reviews = Review::get()->where('product_id',$id);
         $product = Product::find($id);
+        // Retrieve the reviews
+        $reviews = Review::get()->where('product_id',$id);
         // Check if the product was found
         if ($product) {
         // Return the product
