@@ -38,6 +38,7 @@ Route::group([
 
 //Catogory
 Route::get('category',[CategoryController::class,'allCategory']);
+Route::get('category/products/{id}',[ProductController::class,'getProductByCategory']);
 
 
 //Address

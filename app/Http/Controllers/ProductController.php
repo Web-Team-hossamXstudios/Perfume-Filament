@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Review;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -29,6 +30,21 @@ class ProductController extends Controller
         if ($product) {
         // Return the product
             return response(['Product' =>$product, 'Reviews' => $reviews]);
+        } else {
+        // Return Not Found
+        response(['message' => 'Product not found']);
+        }
+    }
+
+
+    public function getProductByCategory($id)
+    {
+        // Retrieve the product
+        $product = Product::get()->where('category_id',$id);
+        // Check if the product was found
+        if ($product) {
+        // Return the product
+            return response(['Product' =>$product]);
         } else {
         // Return Not Found
         response(['message' => 'Product not found']);
