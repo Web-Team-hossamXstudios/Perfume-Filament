@@ -12,6 +12,7 @@ class AddressController extends Controller
 
     public function getAddress(){
         $address= Address::all()->where('client_id',auth()->user()->id);
+        
         return response(['address' => $address],200);
     }
 

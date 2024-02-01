@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function allCategory()
     {
         $categories= Category::all();
         foreach ($categories as $category) {
-            $category->getMedia('categories');
+            $category->getMedia('categories')->first();
         }
-        return response()->json($categories);
-//        return response()->json(['media'=> $media]);
-
+        return response($categories);
     }
+
 }
