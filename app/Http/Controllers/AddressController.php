@@ -10,13 +10,12 @@ use Illuminate\Http\Request;
 class AddressController extends Controller
 {
 
-    public function index($id){
-        $address= Address::find($id);
-        return response()->json(
-            ['Address' => $address ]
-        );
+    public function getAddress(){
+        $address= Address::find(auth()->user()->id);
+        return response([$address],200);
     }
-    public function store(Request $request){
+    
+    public function storeAddress(Request $request){
         $request->validate([
             "city"=>"required",
             "type"=>"required",
@@ -38,17 +37,14 @@ class AddressController extends Controller
             "street"=>$request->street,
             "additional_directions"=>$request->additional_directions,
         ]);
-        return response()->json(["address"=> $address]);
-
+        return response([$address], 201);
 }
-public function update(UpdateAddressRequest $request, Address $address)
-{
-    $address_id=$request->user()->id;
-    $address->where('id', $address_id)->update($request->validated());
 
-    return response()->json([
-        'message' => 'Updated successfully',
-    ], 200);
+public function updateAddress(UpdateAddressRequest $request, Address $address)
+{
+    $address_id =  $request->user()->id;
+    $address->where('id', $address_id)->update($request->validated());
+    return response([ 'message' => 'Updated successfully',], 200);
 
 }
 }

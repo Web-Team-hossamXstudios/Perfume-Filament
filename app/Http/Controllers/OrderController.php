@@ -21,17 +21,19 @@ class OrderController extends Controller
         if ( $order->save()){
             foreach ($request->cartItem as $item)
                 $order_item = new OrderItem();
-            $order_item->order_id = $order->id;
-            $order_item->product_id = $item->product_id;
-            $order_item->quantity = $item->quantity;
-            $order_item->price = $item->price;
+                $order_item->order_id = $order->id;
+                $order_item->product_id = $item->product_id;
+                $order_item->quantity = $item->quantity;
+                $order_item->price = $item->price;
 
         }
+        $order_item->save();
         return response()->json([
             "order"=> $order,
             "orderItems"=> $order_item
         ]);
     }
+    // promo
     public function delete(Order $order)
     {
         $order->delete();
