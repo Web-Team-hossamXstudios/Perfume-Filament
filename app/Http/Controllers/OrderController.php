@@ -32,6 +32,7 @@ class OrderController extends Controller
             "order"=> $order,
             "orderItems"=> $order_item
         ]);
+        // save orderitem and and check where by product_id and order id then delete
     }
     // promo
     public function delete(Order $order)

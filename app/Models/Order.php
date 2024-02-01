@@ -10,20 +10,23 @@ class Order extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function client( ){ 
-        return $this->belongsTo(Client::class); 
+    public function client( ){
+        return $this->belongsTo(Client::class);
     }
 
-    public function promocode( ){ 
-        return $this->belongsTo(Promocode::class); 
+    public function promocode( ){
+        return $this->belongsTo(Promocode::class);
     }
 
-    public function transaction( ){ 
-        return $this->belongsTo(Transaction::class); 
+    public function transaction( ){
+        return $this->belongsTo(Transaction::class);
     }
 
-    public function items( ){ 
-        return $this->hasMany(OrderItem::class); 
+    public function items( ){
+        return $this->hasMany(OrderItem::class);
+    }
+    public function address(){
+        return $this->belongsTo(Address::class);
     }
 
 }
