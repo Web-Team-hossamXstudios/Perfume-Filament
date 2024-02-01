@@ -61,9 +61,9 @@ Route::get('/cart',[CartController::class,'getCart']);
 
 
 //CartItem
-Route::get('/cartItem',[CartItemController::class,'createCartItem']);
-Route::post('/EditCartItem/{id}',[CartItemController::class,'EditCartItem']);
-Route::post('/DeleteCartItem/{id}',[CartItemController::class,'DeleteCartItem']);
+Route::post('/cartItem',[CartItemController::class,'createCartItem']);
+Route::post('/EditCartItem',[CartItemController::class,'EditCartItem']);
+Route::post('/DeleteCartItem',[CartItemController::class,'DeleteCartItem']);
 
 //order
 Route::post('/order',[OrderController::class,'store']);

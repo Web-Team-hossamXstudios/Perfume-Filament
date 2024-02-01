@@ -4,28 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateCartItem;
 use App\Models\CartItem;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CartItemController extends Controller
 {
     public function createCartItem(Request $request){
-    $cartItem = CartItem::create([
-        'cart_id'    => $request->id,
-        'product_id' => $request->product_id,
-        'quantity'   => $request->quantity,
-        'price'      => $request->price,
-    ]);
-}
-
-
-    public function EditCartItem(UpdateCartItem $request, CartItem $cartItem, $id){
-        $cartItem->where('id', $id )->update($request->validated());
-        return response([ 'message' => 'Updated successfully',], 200);
+        $product = Product::find( $request->product_id );
+        $cartItem = new CartItem();
+        $cartItem->cart_id = $request->user()->cart->id;
+        $cartItem->product_id =  $product->id;
+        $cartItem->quantity =  $request->quantity;
+        $cartItem->price     =  $product->price;
+        if ($cartItem->save()) {
+            return response ($cartItem,200);
+        }else {
+            return response ('something went wrong',401);
+        }
     }
 
 
-    public function DeleteCartItem(CartItem $cartItem, $id){
-        $cartItem->where('id', $id )->Destroy();
+    public function EditCartItem(Request $request){
+        $cartItem = CartItem::find( $request->id );
+        $cartItem->quantity =  $request->quantity;
+        if ($cartItem->save()) {
+            return response ($cartItem,200);
+        }else {
+            return response ('something went wrong',401);
+
+        }
+    }
+
+
+    public function DeleteCartItem(Request $request){
+        $cartItem = CartItem::find($request->id)->Destroy();
 
     }
 }
