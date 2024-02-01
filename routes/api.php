@@ -41,7 +41,7 @@ Route::get('category',[CategoryController::class,'index']);
 //Address
 Route::get('address',[AddressController::class,'getAddress']);
 Route::post('address',[AddressController::class,'storeAddress']);
-Route::post('address_update',[AddressController::class,'updateAddress']);
+Route::post('address_update/{id}',[AddressController::class,'updateAddress']);
 
 //Product
 Route::get('/products',[ProductController::class,'index']);

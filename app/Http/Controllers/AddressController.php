@@ -40,11 +40,10 @@ class AddressController extends Controller
         return response([$address], 201);
 }
 
-public function updateAddress(UpdateAddressRequest $request, Address $address)
+public function updateAddress(UpdateAddressRequest $request, Address $address ,$id)
 {
-    $address_id =  $request->user()->id;
-    $address->where('id', $address_id)->update($request->validated());
+    $address->where('id', $id )->update($request->validated());
     return response([ 'message' => 'Updated successfully',], 200);
-
+    
 }
 }
