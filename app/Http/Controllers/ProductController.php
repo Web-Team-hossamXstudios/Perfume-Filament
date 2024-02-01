@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function show($id)
     {
         // Retrieve the product
-        $product = Product::find($id);
+        $product = Product::with('reviews')->find($id);
         // Check if the product was found
         if ($product) {
         // Return the product

@@ -10,7 +10,11 @@ class Address extends Model
     use HasFactory ;
     protected $guarded = [];
 
-    public function client( ){ 
-        return $this->belongsTo(Client::class); 
+    public function client( ){
+        return $this->belongsTo(Client::class);
+    }
+
+    public function order(){
+        return $this->hasMany(Order::class);
     }
 }
