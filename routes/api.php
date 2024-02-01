@@ -66,5 +66,6 @@ Route::post('/EditCartItem',[CartItemController::class,'EditCartItem']);
 Route::post('/DeleteCartItem',[CartItemController::class,'DeleteCartItem']);
 
 //order
-Route::post('/order',[OrderController::class,'store']);
+Route::post('/order',[OrderController::class,'CreateOrder']);
+Route::post('/delete_order',[OrderController::class,'delete']);
 
