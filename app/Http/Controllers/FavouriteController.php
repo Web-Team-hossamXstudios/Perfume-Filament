@@ -18,7 +18,7 @@ class FavouriteController extends Controller
         $favourite = new Favourite();
         $favourite->client_id = $request->user()->id;
         $favourite->product_id = $request->product_id;
-        if ($favourite->save()) {
+        if($favourite->save()) {
             return response ($favourite,200);
         }else {
             return response ('something went wrong',401);
