@@ -42,7 +42,7 @@ Route::get('category',[CategoryController::class,'allCategory']);
 
 //Address
 Route::get('address',[AddressController::class,'getAddress']);
-Route::post('address',[AddressController::class,'storeAddress']);
+Route::post('address',[AddressController::class,'CreateAddress']);
 Route::post('address_update',[AddressController::class,'updateAddress']);
 
 //Product
