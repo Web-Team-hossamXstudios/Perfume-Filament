@@ -21,8 +21,10 @@ class OrderController extends Controller
         $cart= Cart::with('cart_items')->where('client_id',auth('api')->user()->id)->first();
         $order = new Order();
         $order->client_id = auth('api')->user()->id;
-        $promocode = Promocode::where('code',$request->code)->first();
-        $order->promocode_id = $promocode->id;
+        if($request->code){
+            $promocode = Promocode::where('code',$request->code)->first();
+            $order->promocode_id = $promocode->id;
+        }
         $order->total_price = $subtotal;
         $order-> status = "pending";
         if ($order->save()){
@@ -42,19 +44,17 @@ class OrderController extends Controller
                 }
 
             }
-            $totalPrice = $subtotal + $service + $taxe;
+            if($request->code){
+                $totalPrice = $subtotal + $service + $taxe - ($subtotal * $promocode->value/100);
+            }else{
+                $totalPrice = $subtotal + $service + $taxe ;
+            }
             $order->total_price = $totalPrice;
             $order->save();
-            return response([$order,$orderItem],200);
+            return response($order,200);
         }else{
             return response(['error' => 'somthing wrong'], 401);
         }
-
-    }
-    // promo
-    public function allPromo(Request $promo_code)
-    {
-        $promo = Order::where('promocode_id',$promo_code)->first();
 
     }
     public function delete(Order $order)
