@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Model implements HasMedia
 {
     use HasFactory,InteractsWithMedia;
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'description',
+    ];
     protected $casts = [
         'tags' => 'array',
     ];

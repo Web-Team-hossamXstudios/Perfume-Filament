@@ -10,26 +10,22 @@ class ReviewController extends Controller
 {
 
     //get reviews by id
-    public function index(){
+    public function getReview(){
         $reviews = Review::where('client_id', auth('api')->user()->id)->get();
-        return response()->json
-        (['reviews' => $reviews ]);
+        return response(['reviews' => $reviews ]);
     }
 
     //store reviews by id
-    public function store(Request $request, $product_id){
-        $validatedData=$request->validate([
-            "rating"=>"required",
-            "comment"=>"required",
-        ]);
-
-        Review::create([
-            "client_id" => auth('api')->user()->id,
-            "product_id"=> $$request->product_id,
-            "rating"    => $request->rating,
-            "comment"   => $request->comment,
-        ]);
-        return response()->json
-        (['message' => 'Review created successfully']);
+    public function storeReview(Request $request){
+        $review = new Review();
+        $review->client_id = $request->user()->id;
+        $review->rating = $request->rating;
+        $review->comment = $request->comment;
+        $review->product_id = $request->product_id;
+        if($review->save()) {
+            return response ($review,200);
+        }else {
+            return response ('something went wrong',401);
+        }
     }
 }

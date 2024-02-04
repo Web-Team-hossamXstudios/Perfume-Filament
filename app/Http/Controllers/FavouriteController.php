@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
 {
-    //get favourites by id
+    //get favourites
     public function getFavourite(){
-        $favourites = Favourite::where('client_id', auth('api')->user()->id);
+        $favourites = Favourite::where('client_id', auth('api')->user()->id)->get();
         return response(['favourites' => $favourites ]);
     }
 
-    //store favourites by id
+    //store favourites
     public function createFavourite(Request $request){
         $favourite = new Favourite();
         $favourite->client_id = $request->user()->id;

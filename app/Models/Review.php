@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'client_id',
+        'product_id',
+        'rating',
+        'comment',
+    ];
 
     public function client( ){ 
         return $this->belongsTo(Client::class); 

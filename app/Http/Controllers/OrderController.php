@@ -51,7 +51,7 @@ class OrderController extends Controller
     public function delete(Order $order)
     {
         $order->delete();
-        return response()->json(null, 204);
+        return response(null, 204);
     }
 
 }
