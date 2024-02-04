@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'order_id',
+        'type',
+        'amount',
+    ];
 
     public function order( ){ 
         return $this->hasMany(Order::class); 

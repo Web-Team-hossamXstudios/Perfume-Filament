@@ -15,7 +15,12 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
 {
     use HasFactory,InteractsWithMedia;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'email',
+        'gender',
+        'birthdate',
+    ];
 
     protected $hidden = [
         'password',

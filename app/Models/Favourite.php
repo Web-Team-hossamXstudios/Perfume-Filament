@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Favourite extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'client_id',
+        'product_id',
+    ];
 
     public function client( ){ 
         return $this->belongsTo(Client::class); 

@@ -8,8 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-
+    protected $fillable = [
+        'category_id',
+        'name',
+        'description',
+        'stock',
+        'price',
+        'is_feature',
+        'is_active',
+    ];
+    protected $casts = [
+        'tags' => 'array',
+    ];
     public function client( ){
         return $this->belongsTo(Client::class);
     }
