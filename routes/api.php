@@ -51,8 +51,8 @@ Route::get('/products',[ProductController::class,'allProduct']);
 Route::get('/product/{id}',[ProductController::class,'getProduct']);
 
 //Review
-Route::get('/reviews/{id}',[ReviewController::class,'index']);
-Route::post('/reviews',[ReviewController::class,'store']);
+Route::get('/reviews',[ReviewController::class,'getReview']);
+Route::post('/reviews/add',[ReviewController::class,'storeReview']);
 
 //favourite
 Route::get('/favourites',[FavouriteController::class,'getFavourite']);
