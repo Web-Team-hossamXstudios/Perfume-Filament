@@ -18,6 +18,8 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'password',
         'gender',
         'birthdate',
     ];
@@ -29,6 +31,7 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
 
