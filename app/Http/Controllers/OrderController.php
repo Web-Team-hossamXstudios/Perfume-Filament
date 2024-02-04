@@ -4,51 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Client;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Promocode;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function createOrder(Request $request ){
-        $subtot = 0;
+        $subtotal = 0;
+        $settings= Setting::get()->first();
+        $taxe= $settings->taxe;
+        $service= $settings->service;
+        $cart= Cart::with('cart_items')->where('client_id',auth('api')->user()->id)->first();
         $order = new Order();
-        $order->client_id = $request->user()->id;
-        $order->promocode_id = $request->promocode_id;
-        $order->total_price = $subtot;
+        $order->client_id = auth('api')->user()->id;
+        $promocode = Promocode::where('code',$request->code)->first();
+        $order->promocode_id = $promocode->id;
+        $order->total_price = $subtotal;
         $order-> status = "pending";
-
-        $cartitems= CartItem::find($request->cartitem_id);
-        if ( $order->save()){
-            foreach ($cartitems as $item){
-                $order_item = new OrderItem();
-                $order_item->order_id = $order->id;
-                $order_item->product_id = $cartitems->product_id;
-                $order_item->quantity = $cartitems->quantity;
-                $order_item->price = $cartitems->quantity *  $cartitems->price ;
-                   //edit order
-                $subtot = $subtot + ($cartitems->quantity *  $cartitems->price  );
-                //    $subtot= Order::find($order->id );
-                //   $tot= $order->total_price = $subtot;
-                //    $subtot->update();
-
-                if($order_item->save()){
-                    $cartitem = CartItem::where('product_id',$order_item->product_id)->delete();
+        if ($order->save()){
+            foreach ($cart->cart_items as $item){
+                // create new orderItem
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $order->id;
+                $orderItem->product_id = $item->product_id;
+                $orderItem->quantity = $item->quantity;
+                $orderItem->price = $item->total;
+                $order->save();
+                $subtotal = $item->total + $service + $taxe ;
+                if($orderItem->save()){
+                    CartItem::destroy($item->id);
+                }else{
+                    return response(['error' => 'somthing wrong'], 401);
                 }
             }
-               return response([
-                $order, 200 ,
-                $order_item,200
-            ]);
+            // return response($subtotal);
+            $order->total_price = $subtotal;
+            $order->save();
+            return response([$order,$orderItem],200);
         }else{
             return response(['error' => 'somthing wrong'], 401);
         }
     }
-
-
     // promo
     public function allPromo(Request $promo_code)
     {
