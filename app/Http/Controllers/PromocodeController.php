@@ -10,7 +10,7 @@ class PromocodeController extends Controller
 {
     public function allPromo(Request $promo_code)
     {
-        $promo = Order::where('promocode_id', )->first();
+        $promo = Order::where('promocode_id', null )->first();
 
     }
 }

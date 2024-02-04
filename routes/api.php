@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\PromocodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,9 +70,10 @@ Route::post('/cartItem/delete',[CartItemController::class,'deleteCartItem']);
 
 //order
 Route::post('/order',[OrderController::class,'createOrder']);
+Route::post('/order/promo',[OrderController::class,'allPromo']);
 Route::post('/order/delete',[OrderController::class,'delete']);
 
 //promoCode
-Route::post('/promo',[OrderController::class,'applyPromo']);
+Route::post('/promo',[PromocodeController::class,'allPromo']);
 
 

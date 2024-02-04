@@ -20,6 +20,7 @@ class OrderController extends Controller
         $order->total_price = $subtot;
         $order-> status = "pending";
 
+        // $cart= Cart::find('client_id',$request->user()->id);
 
         $cart= Cart::find($request->cart_id);
         if ( $order->save()){
@@ -45,7 +46,7 @@ class OrderController extends Controller
     // promo
     public function allPromo(Request $promo_code)
     {
-        $promo = Order::where('promocode_id', )->first();
+        $promo = Order::where('promocode_id',$promo_code)->first();
 
     }
     public function delete(Order $order)
