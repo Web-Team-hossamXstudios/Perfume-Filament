@@ -9,9 +9,11 @@ class Promocode extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $fillable = ['code', 'exp'];
 
-    
-    public function orders( ){ 
-        return $this->hasMany(Order::class); 
+
+
+    public function orders( ){
+        return $this->hasMany(Order::class);
     }
 }

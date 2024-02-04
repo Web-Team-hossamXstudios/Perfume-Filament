@@ -10,11 +10,14 @@ class Cart extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function client( ){ 
-        return $this->belongsTo(Client::class); 
+    public function client( ){
+        return $this->belongsTo(Client::class);
     }
-    
-    public function items( ){ 
-        return $this->hasMany(CartItem::class); 
+
+    public function items( ){
+        return $this->hasMany(CartItem::class);
+    }
+    public function order(){
+        return $this->belongsTo(Order::class);
     }
 }

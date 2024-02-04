@@ -23,7 +23,6 @@ return new class extends Migration
             ->references('id')
             ->on('promocodes')
             ->onDelete('set null');
-            $table->integer('quantity');
             $table->decimal('total_price');
             $table->string('status');
             $table->timestamps();

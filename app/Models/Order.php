@@ -28,5 +28,11 @@ class Order extends Model
     public function address(){
         return $this->belongsTo(Address::class);
     }
+    public function cart(){
+        return $this->hasOne(Cart::class);
+    }
+    public function cartitem(){
+        return $this->hasMany(Cart::class);
+    }
 
 }
