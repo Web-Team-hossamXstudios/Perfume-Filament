@@ -34,20 +34,21 @@ class OrderController extends Controller
                 $orderItem->quantity = $item->quantity;
                 $orderItem->price = $item->total;
                 $order->save();
-                $subtotal = $item->total + $service + $taxe ;
                 if($orderItem->save()){
+                    $subtotal += $item->total;
                     CartItem::destroy($item->id);
                 }else{
                     return response(['error' => 'somthing wrong'], 401);
                 }
             }
-            // return response($subtotal);
-            $order->total_price = $subtotal;
+            $totalPrice = $subtotal + $service + $taxe;
+            $order->total_price = $totalPrice;
             $order->save();
             return response([$order,$orderItem],200);
         }else{
             return response(['error' => 'somthing wrong'], 401);
         }
+
     }
     // promo
     public function allPromo(Request $promo_code)
