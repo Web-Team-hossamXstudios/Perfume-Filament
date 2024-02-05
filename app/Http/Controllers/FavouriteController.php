@@ -25,4 +25,16 @@ class FavouriteController extends Controller
         }
 
     }
+    //delete favourite
+    public function deleteFavourite(Request $request){
+
+        $favorite = Favourite::where('client_id', auth('api')->user()->id)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        $favorite->delete();
+
+        return response(null, 204);
+
+    }
 }

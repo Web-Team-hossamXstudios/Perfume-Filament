@@ -58,6 +58,8 @@ Route::post('/reviews/add',[ReviewController::class,'storeReview']);
 //favourite
 Route::get('/favourites',[FavouriteController::class,'getFavourite']);
 Route::post('/favourites/add',[FavouriteController::class,'createFavourite']);
+Route::post('/favourites/delete',[FavouriteController::class,'deleteFavourite']);
+
 
 //Cart
 Route::get('/cart',[CartController::class,'getCart']);

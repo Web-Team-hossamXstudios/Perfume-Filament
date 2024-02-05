@@ -61,7 +61,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
+                // TextColumn::make('id'),
                 SpatieMediaLibraryImageColumn::make('product')
                 ->collection('products')
                 ->toggleable(isToggledHiddenByDefault: true),
