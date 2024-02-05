@@ -50,5 +50,10 @@ class ProductController extends Controller
         response(['message' => 'Product not found']);
         }
     }
+    public function ProductWithFeature(){
+        $products= Product::all()->where('is_feature',1);
+        return response([$products], 200);
+
+    }
 }
 

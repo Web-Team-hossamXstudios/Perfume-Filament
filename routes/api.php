@@ -49,13 +49,14 @@ Route::post('address_update/{id}',[AddressController::class,'updateAddress']);
 
 //Product
 Route::get('/products',[ProductController::class,'allProduct']);
-// featured
+Route::get('/products/featured',[ProductController::class,'ProductWithFeature']);
 Route::get('/product/{id}',[ProductController::class,'getProduct']);
 
 //Review
-Route::get('/reviews',[ReviewController::class,'getReview']);
-// get reviews by client id
+Route::get('/reviews',[ReviewController::class,'getReviewByClient']);
 Route::post('/reviews/add',[ReviewController::class,'storeReview']);
+Route::get('/reviews/product/{id}',[ReviewController::class,'getReviewByProduct']);
+
 
 //favourite
 Route::get('/favourites',[FavouriteController::class,'getFavourite']);

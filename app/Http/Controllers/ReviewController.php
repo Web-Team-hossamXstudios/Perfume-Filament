@@ -10,9 +10,9 @@ class ReviewController extends Controller
 {
 
     //get reviews by id
-    public function getReview(){
+    public function getReviewByClient(){
         $reviews = Review::where('client_id', auth('api')->user()->id)->get();
-        return response(['reviews' => $reviews ]);
+        return response([ $reviews ], 200);
     }
 
     //store reviews by id
@@ -27,5 +27,12 @@ class ReviewController extends Controller
         }else {
             return response ('something went wrong',401);
         }
+    }
+
+    public function getReviewByProduct($id){
+        $product = Review::where('product_id', $id)->get();
+        return response ($product,200);
+
+
     }
 }
