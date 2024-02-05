@@ -15,6 +15,13 @@ class FavouriteController extends Controller
 
     //store favourites
     public function createFavourite(Request $request){
+        $existingFavorite = Favourite::where('client_id', auth('api')->user()->id)
+        ->where('product_id', $request->product_id)
+        ->first();
+        if ($existingFavorite) {
+            return response()->json(['message' => 'Product already in favorites']);
+        }
+
         $favourite = new Favourite();
         $favourite->client_id = $request->user()->id;
         $favourite->product_id = $request->product_id;
@@ -34,7 +41,7 @@ class FavouriteController extends Controller
 
         $favorite->delete();
 
-        return response(null, 204);
+        return response($favorite, 401);
 
     }
 }
