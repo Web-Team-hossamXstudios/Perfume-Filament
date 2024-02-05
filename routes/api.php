@@ -38,9 +38,7 @@ Route::group([
 });
 
 //Catogory
-Route::get('category',[CategoryController::class,'allCategory']);
-Route::get('category/{id}/products',[ProductController::class,'getProductByCategory']);
-
+Route::get('/category',[CategoryController::class,'allCategory']);
 
 //Address
 Route::get('address',[AddressController::class,'getAddress']);
@@ -51,6 +49,8 @@ Route::post('address_update/{id}',[AddressController::class,'updateAddress']);
 Route::get('/products',[ProductController::class,'allProduct']);
 Route::get('/products/featured',[ProductController::class,'ProductWithFeature']);
 Route::get('/product/{id}',[ProductController::class,'getProduct']);
+Route::get('/products/category/{id}',[ProductController::class,'getProductByCategory']);
+
 
 //Review
 Route::get('/reviews',[ReviewController::class,'getReviewByClient']);
