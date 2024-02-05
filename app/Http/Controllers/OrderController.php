@@ -18,6 +18,7 @@ class OrderController extends Controller
     public function createOrder(Request $request ){
         $subtotal = 0;
         $settings= Setting::get()->first();
+        $promocodes= Promocode::all();
         $taxe= $settings->taxe;
         $service= $settings->service;
         $cart= Cart::with('cart_items')->where('client_id',auth('api')->user()->id)->first();
@@ -25,16 +26,25 @@ class OrderController extends Controller
         $order->client_id = auth('api')->user()->id;
         if($request->code){
             $promocode = Promocode::where('code',$request->code)->first();
-            $promocode_client = Order::with('promocode')->where('client_id',auth('api')->user()->id)->first();
-            if($promocode->id  == $promocode_client->id){
+            if(!$promocode == null){
+            $promocode_client = Order::where('client_id',auth('api')->user()->id)
+            ->where('promocode_id', $promocode->id)
+            ->first();
+        }
+        else{
+            return response(['error' => 'code is not matched'], 401);
+        }
+            if($promocode_client != null){
                 return response(['error' => 'code is used'], 401);
             }else{
                 $order->promocode_id = $promocode->id;
             }
+        }else{
+            return response(['error' => 'somthing wrong'], 401);
         }
         $order->total_price = $subtotal;
         $order-> status = "pending";
-        if ($order->save()){
+        if ($order->save() && (count($cart->cart_items) > 0)){
             foreach ($cart->cart_items as $item){
                 // create new orderItem
                 $orderItem = new OrderItem();
@@ -49,7 +59,6 @@ class OrderController extends Controller
                 }else{
                     return response(['error' => 'somthing wrong'], 401);
                 }
-
             }
             if($request->code){
                 $totalPrice = $subtotal + $service + $taxe - ($subtotal * $promocode->value/100);
