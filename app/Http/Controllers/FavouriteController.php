@@ -10,7 +10,7 @@ class FavouriteController extends Controller
     //get favourites
     public function getFavourite(){
         $favourites = Favourite::where('client_id', auth('api')->user()->id)->get();
-        return response(['favourites' => $favourites ]);
+        return response([ $favourites ], 201);
     }
 
     //store favourites
