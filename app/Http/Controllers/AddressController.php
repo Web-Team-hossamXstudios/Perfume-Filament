@@ -45,9 +45,9 @@ class AddressController extends Controller
         }
 }
 
-public function updateAddress(UpdateAddressRequest $request)
+public function updateAddress(UpdateAddressRequest $request, $id)
 {
-    $address =Address::find($request->id )->update($request->validated());
+    $address =Address::find($id)->update($request->validated());
     return response([ 'message' => 'Updated successfully',], 200);
 
 }

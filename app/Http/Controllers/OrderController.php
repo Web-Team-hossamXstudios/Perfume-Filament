@@ -49,6 +49,7 @@ class OrderController extends Controller
                 }else{
                     return response(['error' => 'somthing wrong'], 401);
                 }
+
             }
             if($request->code){
                 $totalPrice = $subtotal + $service + $taxe - ($subtotal * $promocode->value/100);
@@ -68,10 +69,11 @@ class OrderController extends Controller
         }
 
     }
-    public function delete(Order $order)
-    {
-        $order->delete();
-        return response(null, 204);
+
+    public function getOrder(){
+        $orders = Order::where('client_id', auth('api')->user()->id)->get();
+        return response([ $orders ], 201);
+
     }
 
 }

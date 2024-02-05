@@ -12,7 +12,7 @@ class CartController extends Controller
     public function getCart(Request $request)
     {
         // Retrieve cart
-        $carts = Cart::where('client_id', auth('api')->user()->id);
+        $carts = Cart::with('cart_items')->where('client_id', auth('api')->user()->id)->get();
         return response([$carts], 200);
     }
 

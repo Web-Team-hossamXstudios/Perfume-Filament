@@ -44,9 +44,9 @@ class FavouriteResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('client_id')->searchable()
+                TextColumn::make('client.name')->searchable()
                 ->label('Client'),
-                TextColumn::make('product_id')->searchable()
+                TextColumn::make('product.name')->searchable()
                 ->label('Product'),
             ])
             ->filters([

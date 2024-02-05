@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
-    
+
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    
+
     public function login(Request $request){
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -31,7 +31,7 @@ class AuthController extends Controller
         return $this->createNewToken($token);
     }
 
-    
+
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
@@ -56,20 +56,25 @@ class AuthController extends Controller
         ], 201);
     }
 
-    
+
     public function logout() {
         auth()->logout();
         return response(['message' => 'client successfully signed out']);
     }
 
-    
+
     public function refresh() {
         return $this->createNewToken(auth()->refresh());
     }
 
-    
+
     public function clientProfile() {
-        return response(auth()->user());
+        // auth()->user()
+        $clients =Client::all()->where('id',auth('api')->user()->id);
+        foreach ($clients as $client) {
+            $client->getMedia('clients')->first();
+        }
+        return response($clients);
     }
 
     public function updateProfile(UpdateClientProfileRequest $request, Client $client) {
@@ -78,7 +83,7 @@ class AuthController extends Controller
         return response(['message' => 'Updated successfully'], 200);
     }
 
-    
+
     protected function createNewToken($token){
         return response([
             'access_token' => $token,

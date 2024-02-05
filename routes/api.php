@@ -44,8 +44,8 @@ Route::get('category/{id}/products',[ProductController::class,'getProductByCateg
 
 //Address
 Route::get('address',[AddressController::class,'getAddress']);
-Route::post('address',[AddressController::class,'CreateAddress']);
-Route::post('address_update',[AddressController::class,'updateAddress']);
+Route::post('address/create',[AddressController::class,'CreateAddress']);
+Route::post('address_update/{id}',[AddressController::class,'updateAddress']);
 
 //Product
 Route::get('/products',[ProductController::class,'allProduct']);
@@ -58,6 +58,8 @@ Route::post('/reviews/add',[ReviewController::class,'storeReview']);
 //favourite
 Route::get('/favourites',[FavouriteController::class,'getFavourite']);
 Route::post('/favourites/add',[FavouriteController::class,'createFavourite']);
+Route::post('/favourites/delete',[FavouriteController::class,'deleteFavourite']);
+
 
 //Cart
 Route::get('/cart',[CartController::class,'getCart']);
@@ -70,8 +72,7 @@ Route::post('/cartItem/delete',[CartItemController::class,'deleteCartItem']);
 
 //order
 Route::post('/order/add',[OrderController::class,'createOrder']);
-Route::post('/order/promo',[OrderController::class,'allPromo']);
-Route::post('/order/delete',[OrderController::class,'delete']);
+Route::get('/order',[OrderController::class,'getOrder']);
 
 
 
