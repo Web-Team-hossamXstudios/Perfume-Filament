@@ -77,10 +77,10 @@ class AuthController extends Controller
         return response($clients);
     }
 
-    public function updateProfile(UpdateClientProfileRequest $request, Client $client) {
-        $client_id  =   $request->user()->id;
-        $client->where('id', $client_id)->update($request->validated());
-        return response(['message' => 'Updated successfully'], 200);
+    public function updateProfile(UpdateClientProfileRequest $request) {
+        $client  =   $request->user();
+        $client->update($request->validated());
+        return response($client, 200);
     }
 
 

@@ -49,10 +49,12 @@ Route::post('address_update/{id}',[AddressController::class,'updateAddress']);
 
 //Product
 Route::get('/products',[ProductController::class,'allProduct']);
+// featured
 Route::get('/product/{id}',[ProductController::class,'getProduct']);
 
 //Review
 Route::get('/reviews',[ReviewController::class,'getReview']);
+// get reviews by client id
 Route::post('/reviews/add',[ReviewController::class,'storeReview']);
 
 //favourite
