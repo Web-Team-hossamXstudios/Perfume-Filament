@@ -79,6 +79,8 @@ Route::post('/cartItem/delete',[CartItemController::class,'deleteCartItem']);
 //order
 Route::post('/order/add',[OrderController::class,'createOrder']);
 Route::get('/order',[OrderController::class,'getOrder']);
+Route::get('/orders/current',[OrderController::class,'getCurrentOrder']);
+Route::get('/orders/last',[OrderController::class,'getLastOrder']);
 
 
 
