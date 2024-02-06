@@ -18,7 +18,6 @@ class OrderController extends Controller
     public function createOrder(Request $request ){
         $subtotal = 0;
         $settings= Setting::get()->first();
-        $promocodes= Promocode::all();
         $taxe= $settings->taxe;
         $service= $settings->service;
         $cart= Cart::with('cart_items')->where('client_id',auth('api')->user()->id)->first();
