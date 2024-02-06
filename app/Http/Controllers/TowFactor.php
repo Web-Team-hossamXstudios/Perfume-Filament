@@ -18,7 +18,7 @@ class TowFactor extends Controller
             $client->notify(new TowFactorCode());
             return response(['OTP' => $client->code],201);
         }else{
-            return response('The email is incorrect',401);
+            return response(['msg'=>'The email is incorrect'],401);
             
         }
 
@@ -31,9 +31,9 @@ class TowFactor extends Controller
             $client->password = bcrypt($request->password);
             $client->destoryCode();
             $client->save();
-            return response('Update successfully',201);
+            return response(['msg'=>'Update successfully'],201);
         }else{
-            return response('OTP is incorrect',401);
+            return response(['msg'=>'OTP is incorrect'],401);
             
         }
 
