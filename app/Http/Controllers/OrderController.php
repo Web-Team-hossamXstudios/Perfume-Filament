@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\CartItem;
+use App\Models\Client;
 use App\Models\OrderItem;
 use App\Models\Promocode;
 use App\Models\Transaction;
@@ -18,6 +20,7 @@ class OrderController extends Controller
     public function createOrder(Request $request ){
         $subtotal = 0;
         $settings= Setting::get()->first();
+        $address_id =Address::find($request->id);
         $taxe= $settings->taxe;
         $service= $settings->service;
         $cart= Cart::with('cart_items')->where('client_id',auth('api')->user()->id)->first();
@@ -69,7 +72,7 @@ class OrderController extends Controller
             $transaction->type = $request->type;
             $transaction->amount = $order->total_price;
             $transaction->save();
-            return response($order,200);
+            return response([$order, $address_id],200);
         }else{
             return response(['error' => 'somthing wrong'], 401);
         }
@@ -80,6 +83,25 @@ class OrderController extends Controller
         $orders = Order::where('client_id', auth('api')->user()->id)->get();
         return response([ $orders ], 201);
 
+    }
+
+    public function getCurrentOrder()
+    {
+        $currentOrder = Order::where('client_id',auth('api')->user()->id)
+                             ->where('created_at', '>=', now()->subDay())
+                             ->latest()
+                             ->first();
+
+        return response($currentOrder, 200);
+    }
+
+    public function getLastOrder()
+    {
+        $lastOrder = Order::where('client_id',auth('api')->user()->id)
+                          ->latest()
+                          ->first();
+
+        return response($lastOrder,200);
     }
 
 }

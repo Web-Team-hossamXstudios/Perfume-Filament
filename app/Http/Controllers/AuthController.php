@@ -52,7 +52,6 @@ class AuthController extends Controller
         return response([
             'message' => 'client successfully registered',
             'client' => $client,
-            'cart' => $cart
         ], 201);
     }
 
