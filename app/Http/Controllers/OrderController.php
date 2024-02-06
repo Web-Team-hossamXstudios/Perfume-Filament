@@ -30,17 +30,15 @@ class OrderController extends Controller
             $promocode_client = Order::where('client_id',auth('api')->user()->id)
             ->where('promocode_id', $promocode->id)
             ->first();
-        }
-        else{
-            return response(['error' => 'code is not matched'], 401);
-        }
+            }
+            else{
+                return response(['error' => 'code is not matched'], 401);
+            }
             if($promocode_client != null){
                 return response(['error' => 'code is used'], 401);
             }else{
                 $order->promocode_id = $promocode->id;
             }
-        }else{
-            return response(['error' => 'somthing wrong'], 401);
         }
         $order->total_price = $subtotal;
         $order-> status = "pending";

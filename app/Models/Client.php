@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Cart;
 
 
 class Client extends Authenticatable implements JWTSubject, HasMedia
 {
-    use HasFactory,InteractsWithMedia;
+    use HasFactory,InteractsWithMedia , Notifiable;
 
     protected $fillable = [
         'name',
@@ -55,20 +56,35 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
     public function favourites( ){
         return $this->hasMany(Favourite::class);
     }
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
+
+    
     public function getJWTIdentifier() {
         return $this->getKey();
     }
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
+
+    
     public function getJWTCustomClaims() {
         return [];
     }
+    
+
+    public function generateCode() {
+        
+        $this->timestamps = false;
+        $this->code = rand(1000,9999);
+        $this->expire_at = now()->addMinute(15);
+        $this->save();
+        
+    }
+
+    public function destoryCode() {
+        
+        $this->timestamps = false;
+        $this->code = null;
+        $this->expire_at = null;
+        $this->save();
+        
+    }
+
+
 }

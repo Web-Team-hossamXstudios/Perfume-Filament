@@ -13,6 +13,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PromocodeController;
+use App\Http\Controllers\TowFactor;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +27,12 @@ use App\Http\Controllers\PromocodeController;
 */
 
 //Aut JWT
+Route::post('/forget_password', [TowFactor::class, 'forgetPassword']);
+Route::post('/update/password', [TowFactor::class, 'UpdatePasswordByOtp']);
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
